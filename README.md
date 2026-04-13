@@ -1,67 +1,68 @@
 # HideSelf Releases
 
-Public release repository for signed Windows builds and updater artifacts of HideSelf.
+Публичный репозиторий релизов HideSelf.
 
-This repository is used only for distribution:
+Здесь публикуются только готовые Windows-сборки и артефакты для встроенного обновления приложения.
 
-- NSIS installers
-- updater signatures (`.sig`)
-- `latest.json` manifest for Tauri updater
+## Что это за репозиторий
 
-The main development repository may remain private, but updater artifacts must stay publicly accessible so installed clients can download updates without GitHub authentication.
+Этот репозиторий нужен для распространения:
 
-## What Users Download
+- установщиков `HideSelf_<version>_x64-setup.exe`
+- файлов подписи `HideSelf_<version>_x64-setup.exe.sig`
+- updater-манифеста `latest.json`
 
-Users normally need only:
+Основной репозиторий разработки может оставаться приватным, но файлы обновления должны быть доступны публично, иначе установленный клиент не сможет проверить и скачать новую версию.
+
+## Что скачивать
+
+### Windows x64
+
+#### Основной вариант
 
 - `HideSelf_<version>_x64-setup.exe`
 
-Updater-enabled clients may also consume:
+Это обычный рекомендуемый установщик приложения.
+
+#### Файлы для встроенного обновления
 
 - `HideSelf_<version>_x64-setup.exe.sig`
 - `latest.json`
 
-## Update Channel
+Эти файлы нужны самому клиенту HideSelf для проверки подписи и установки обновления. Вручную они обычно не нужны.
 
-HideSelf desktop clients check this repository for the latest published updater manifest and signed installer artifacts.
+## Как работает обновление
 
-## Notes
+Установленный клиент HideSelf обращается к этому репозиторию за:
 
-- Releases are published automatically by GitHub Actions from the main HideSelf repository.
-- Source code, development workflow, and issue tracking are not hosted here.
-- If you need the main project repository, contact the maintainer.
+- свежим `latest.json`
+- подписанным установщиком
 
----
+Если опубликована более новая версия, клиент может показать обновление прямо в интерфейсе и установить его поверх текущей версии.
 
-# HideSelf Releases
+## Важно для установки
 
-Публичный репозиторий релизов для подписанных Windows-сборок и updater-артефактов HideSelf.
+- релизы публикуются в формате light installer
+- такой установщик заметно меньше по размеру
+- если на компьютере нет WebView2, он может быть догружен во время установки
+- для обычного использования это полноценный установщик, а не урезанная версия приложения
 
-Этот репозиторий используется только для распространения:
+## Что умеет HideSelf
 
-- NSIS-инсталляторов
-- updater-подписей (`.sig`)
-- манифеста `latest.json` для Tauri updater
+- управление `mihomo`, `zapret` и `TG WS` из одного клиента
+- импорт профилей и подписок
+- раздельная маршрутизация по доменам и приложениям Windows
+- просмотр логов и состояния подключений
+- встроенная проверка и установка обновлений приложения
 
-Основной репозиторий разработки может оставаться приватным, но updater-артефакты должны быть публично доступны, чтобы установленный клиент мог получать обновления без авторизации в GitHub.
+## Откуда берутся релизы
 
-## Что скачивают пользователи
-
-Обычно пользователю нужен только:
-
-- `HideSelf_<version>_x64-setup.exe`
-
-Для встроенного updater также используются:
-
-- `HideSelf_<version>_x64-setup.exe.sig`
-- `latest.json`
-
-## Канал обновлений
-
-Desktop-клиенты HideSelf проверяют этот репозиторий на наличие свежего updater-манифеста и подписанных установочных файлов.
+- релизы публикуются автоматически через GitHub Actions из основного репозитория HideSelf
+- вручную файлы сюда обычно не загружаются
+- этот репозиторий не используется для разработки, issue-трекинга или хранения исходников приложения
 
 ## Примечания
 
-- Релизы публикуются автоматически через GitHub Actions из основного репозитория HideSelf.
-- Исходный код, разработка и issue tracking ведутся не здесь.
-- Если нужен основной репозиторий проекта, свяжитесь с владельцем.
+- если вам нужен только установщик, скачивайте `x64-setup.exe`
+- если вы тестируете встроенный updater, важны также `.sig` и `latest.json`
+- если релиз уже опубликован, но клиент его не видит, сначала проверьте доступность `latest.json` в браузере без авторизации
